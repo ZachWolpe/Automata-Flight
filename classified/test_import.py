@@ -2,4 +2,6 @@
 def main():
     print('\n \n __________________________ this is insane __________________________\n\n')
 
-main()
+if __name__ == "__main__":
+    main()
+
