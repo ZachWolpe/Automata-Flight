@@ -25,19 +25,22 @@ def main():
                 print('retry...')
 
         # skip first 300 frames
-        frame_skip = 300
-        while True:
+        frame_skip = 0
+
+        #takeoff
+        drone.takeoff()
+
+        # index
+        index = 0
+        #while True:
+        for i in range(10):
             for frame in container.decode(video=0):
                 if 0 < frame_skip:
                     frame_skip = frame_skip - 1
                     continue
-                start_time = time.time()
+                start_time = time.time() 
                 image = cv2.cvtColor(numpy.array(frame.to_image()), cv2.COLOR_RGB2BGR)
-                
-                #maybe 
-
-                #cv2.imshow('Original', image)
-                
+        
                 # Detect the faces
                 faces = face_cascade.detectMultiScale(image, 1.1, 4)
 
@@ -53,10 +56,26 @@ def main():
                     print('mid: ', mid[1])
                     print('y_change: ',y_change)
 
+                    
+                    #p=5
+                    # responsive controls 
+                    # if y_change < 0:
+                    #     drone.down(abs(y_change)*p/100)
+                    # if y_change > 0:
+                    #     drone.up(abs(y_change)*p/100)
+
+                    # if x_change < 0:
+                    #     drone.right(abs(x_change)*p/100)
+                    # if x_change > 0:
+                    #     drone.left(abs(x_change)*p/100)
+
+               # drone.land()
+                #drone.palm_land()
+                
+                    
+
                 # display
                 cv2.imshow('Original', image)
-
-                    # Responsive Controls
 
                 cv2.waitKey(1)
                 if frame.time_base < 1.0/60:
@@ -64,7 +83,12 @@ def main():
                 else:
                     time_base = frame.time_base
                 frame_skip = int((time.time() - start_time)/time_base)
-                    
+
+
+                # # Responsive Controls
+                # land  
+                if i == (10-1):
+                    drone.land()   
 
     except Exception as ex:
         exc_type, exc_value, exc_traceback = sys.exc_info()
@@ -84,6 +108,3 @@ if __name__ == '__main__':
 
 
 
-
-
-#

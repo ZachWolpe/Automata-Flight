@@ -1,8 +1,8 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import time
-# from test_import import main
-import mission_control
+import test_import 
+# import mission_control
 
 
 # use creds to create a client to interact with the Google Drive API
@@ -21,7 +21,8 @@ while True:
     status = list_of_hashes[-1]['Emergency Call']
     print(status)
     if (status == 'TRUE'):
+        print(status)
         print(True)
-        mission_control.main()
+        test_import.main()
         break
     
